@@ -22,6 +22,8 @@ const Elevator:FC<ElevatorProps> = ({totalFloors, idleTime, idlePosition}) =>{
     const [currentPosition, setCurrentPosition] = useState(4);
     const [movingDirection, setMovingDirection] = useState("down");
     const [idleCount, setIdleCount] = useState(fourMins);
+    const [logMessage, setLogMessage]=useState<string>("Status: Ready");
+
 
     const init = new Date()
     const [date, setDate] = useState(init)
@@ -53,10 +55,12 @@ const Elevator:FC<ElevatorProps> = ({totalFloors, idleTime, idlePosition}) =>{
 
         console.log(goTo);
         if(goTo !== undefined) {
-            console.log("hello")
-            console.log("Going to ", goTo, " Direction: ", movingDirection)
+            setLogMessage("Going to " + goTo+ " Direction: " + movingDirection)
             setCurrentPosition(goTo);
             newIdleCount=fourMins;
+        }
+        else{
+            setLogMessage("Idle")
         }
 
         if(idleCount<=0){
@@ -88,20 +92,29 @@ const Elevator:FC<ElevatorProps> = ({totalFloors, idleTime, idlePosition}) =>{
     }
 
 
-    const addToQueue = (floor: number)=>{
+    const addToQueue = (floor: number, wantsToGo=movingDirection)=>{
 
         var _queue=queue;
 
-        if(floor > currentPosition ){
-        //    add to up arra
-            _queue={...queue, up: [...queue.up, floor].filter(unique).sort((a,b)=>{return (b-a)})}
+        if(wantsToGo===movingDirection){
+            if(floor > currentPosition ){
+            //    add to up arra
+                _queue={...queue, up: [...queue.up, floor].filter(unique).sort((a,b)=>{return (b-a)})}
+            }
+            else{
+                _queue={...queue, down: [...queue.down, floor].filter(unique).sort()}
+            }
         }
         else{
-            _queue={...queue, down: [...queue.down, floor].filter(unique).sort()}
+            if(floor > currentPosition ){
+                //    add to up arra
+                _queue={...queue, down: [...queue.down, floor].filter(unique).sort()}
+            }
+            else{
+                _queue={...queue, up: [...queue.up, floor].filter(unique).sort((a,b)=>{return (b-a)})}
+            }
         }
 
-        // var _queue=[...queue, floor].filter(unique).sort()
-        // elevatorSort(currentPosition, _queue, movingDirection);
         setQueue(_queue);
     }
 
@@ -143,9 +156,7 @@ const Elevator:FC<ElevatorProps> = ({totalFloors, idleTime, idlePosition}) =>{
                 </code>
 
                 <div>
-                    {
-                        date.toLocaleTimeString()
-                    }
+                 Status:    {logMessage}
                 </div>
 
             </div>

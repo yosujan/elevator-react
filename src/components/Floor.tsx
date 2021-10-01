@@ -10,9 +10,9 @@ const Floor:FC<FloorProps> = ({number}) => {
 
     const elevatorProperties = useContext(ElevatorContext);
 
-    const callElevator = (floor:number)=>{
+    const callElevator = (floor:number, wantsToGo:string)=>{
 
-        elevatorProperties.addToQueue(floor)
+        elevatorProperties.addToQueue(floor, wantsToGo)
 
     }
 
@@ -21,8 +21,9 @@ const Floor:FC<FloorProps> = ({number}) => {
 
             <div className="outside">
                 <h5>Floor {number}</h5>
-                <Button direction={"up"} onButtonClick={()=>callElevator(number)} />
-                <Button direction={"down"} onButtonClick={()=>callElevator(number)} />
+                {elevatorProperties.totalFloors!==number+1 && <Button direction={"up"} onButtonClick={()=>callElevator(number, "up")} /> }
+
+                {number !==0 && <Button direction={"down"} onButtonClick={() => callElevator(number, "down")}/>}
             </div>
 
             <div className="chamber"></div>
