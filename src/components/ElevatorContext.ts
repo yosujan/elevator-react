@@ -15,9 +15,11 @@ type ElevatorContextProps = {
     currentPosition: number,
     movingDirection: string,
     addToQueue?: any,
+    addToQueueFromBox?:any,
     setCurrentPosition?: React.Dispatch<React.SetStateAction<number>>,
     setMovingDirection?: React.Dispatch<React.SetStateAction<string>>,
 }
+
 
 
 

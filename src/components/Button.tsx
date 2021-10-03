@@ -3,16 +3,14 @@ import React, {FC} from 'react';
 interface ButtonProps{
     direction: string;
     onButtonClick: any;
+    active?: boolean|undefined;
 }
 
-const Button: FC<ButtonProps> = ({direction,onButtonClick }) => {
+const Button: FC<ButtonProps> = ({direction,onButtonClick, active }) => {
     
-    // const onClick = (direction: string) => {
-    //     onButtonClick(direction);
-    // }
 
     return (<>
-        <button type="button" className={"direction-"+direction} onClick={onButtonClick}>
+        <button type="button" className={"direction-"+direction + " "+ (active &&"active")} onClick={onButtonClick}>
             {direction} <i className={"arrow "+direction}></i>
         </button>
 

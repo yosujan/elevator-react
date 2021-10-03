@@ -1,6 +1,6 @@
 import React, {FC, useContext} from 'react';
 import Button from "./Button";
-import ElevatorContext from "./ElevatorContext";
+import {ElevatorContext} from "./Elevator";
 
 interface FloorProps{
     number: number;
@@ -10,20 +10,15 @@ const Floor:FC<FloorProps> = ({number}) => {
 
     const elevatorProperties = useContext(ElevatorContext);
 
-    const callElevator = (floor:number, wantsToGo:string)=>{
-
-        elevatorProperties.addToQueue(floor, wantsToGo)
-
-    }
-
     return (
         <div className="floor">
 
             <div className="outside">
                 <h5>Floor {number}</h5>
-                {elevatorProperties.totalFloors!==number+1 && <Button direction={"up"} onButtonClick={()=>callElevator(number, "up")} /> }
+                {elevatorProperties?.elevator?.totalFloors!==number+1 && <Button active={!!(elevatorProperties.upCalls?.get(number))} direction={"up"} onButtonClick={()=> elevatorProperties.callFromOutside?.(number, "up") } /> }
 
-                {number !==0 && <Button direction={"down"} onButtonClick={() => callElevator(number, "down")}/>}
+                {number !==0 && <Button direction={"down"} active={!!(elevatorProperties.downCalls?.get(number))} onButtonClick={()=> elevatorProperties.callFromOutside?.(number, "down")}/>}
+
             </div>
 
             <div className="chamber"></div>

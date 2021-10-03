@@ -5,7 +5,7 @@ import Elevator from "./components/Elevator";
 function App() {
   return (
     <div className="App">
-      <Elevator totalFloors={7} idleTime={4} idlePosition={4} />
+      <Elevator />
     </div>
   );
 }

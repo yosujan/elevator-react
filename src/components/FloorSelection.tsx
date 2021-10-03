@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
-import ElevatorContext from "./ElevatorContext";
+import {ElevatorContext} from "./Elevator";
 
 const FloorSelection = () => {
 
     const elevatorProperties = useContext(ElevatorContext);
-    const totalFloors:number=  elevatorProperties.totalFloors?? 7;
+    const totalFloors:number=  elevatorProperties.elevator?.totalFloors??7;
 
     const addToQueue = (floor:number) => {
-      elevatorProperties.addToQueue(floor);
+      elevatorProperties.selectDestination?.(floor)
     }
 
     
@@ -15,7 +15,7 @@ const FloorSelection = () => {
         <div>
 
             {Array(totalFloors).fill(1).map((el, i) =>
-                <button type="button" className="floorSelection-key" key={Math.random()} onClick={ ()=> addToQueue(i)} >{i}</button>
+                <button type="button" className="floorSelection-key" key={i} onClick={ ()=> addToQueue(i)} >{i}</button>
             )}
 
         </div>
