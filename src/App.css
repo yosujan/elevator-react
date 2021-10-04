@@ -123,3 +123,13 @@ button.active {
   background: #f00;
   color: #fff;
 }
+
+.buttons-panel {
+  max-width: 75px;
+  display: flex;
+  padding: 10px;
+  justify-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
